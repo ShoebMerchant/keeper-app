@@ -1,19 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
-
-import notes from "../notes";
-console.log(notes);
+import CreateArea from "./CreateArea";
 
 export default function App() {
+  const [list, setList] = useState([]);
+
+  function handleClick(note) {
+    setList(prevVal => [...prevVal, note]);
+  }
+
+  function handleDelButton(id) {
+    setList(prevVal => {
+      return prevVal.filter((el, index) => index !== id);
+    });
+  }
+
   return (
     <div>
       <Header />
+      <CreateArea handleClick={handleClick} />
       <Footer />
-      {notes.map(note => (
-        <Note title={note.title} key={note.key} content={note.content} />
-      ))}
+      {list.map((note, index) => {
+        return (
+          <Note
+            key={index}
+            id={index}
+            title={note.title}
+            content={note.content}
+            handleDelButton={handleDelButton}
+          />
+        );
+      })}
     </div>
   );
 }
