@@ -1,38 +1,55 @@
 import React, { useState } from "react";
+import AddIcon from "@material-ui/icons/Add";
+import Fab from "@material-ui/core/Fab";
+import { Zoom } from "@material-ui/core";
 
 export default function CreateArea(props) {
   const [note, setNote] = useState({
     title: "",
-    content: "",
+    content: ""
   });
+  const [NoteIsClicked, setNoteClick] = useState(false);
 
   function handleChange(event) {
     const { value, name } = event.target;
-    setNote(prevVal => ({ ...prevVal, [name]: value }));
+    setNote((prevVal) => ({ ...prevVal, [name]: value }));
+  }
+
+  function handleNoteClick() {
+    setNoteClick(true);
   }
 
   return (
     <div>
-      <form
-        onSubmit={event => {
-          props.handleClick(note);
-          event.preventDefault();
-        }}
-      >
-        <input
-          value={note.title}
-          onChange={handleChange}
-          name="title"
-          placeholder="Title"
-        />
+      <form className="create-note">
+        {NoteIsClicked && (
+          <input
+            value={note.title}
+            onChange={handleChange}
+            name="title"
+            placeholder="Title"
+          />
+        )}
+
         <textarea
           value={note.content}
           onChange={handleChange}
+          onClick={handleNoteClick}
           name="content"
           placeholder="Take a note..."
-          rows="3"
+          rows={NoteIsClicked ? 3 : 1}
         />
-        <button>Add</button>
+
+        <Zoom in={NoteIsClicked}>
+          <Fab
+            onClick={(event) => {
+              props.handleClick(note);
+              event.preventDefault();
+            }}
+          >
+            <AddIcon />
+          </Fab>
+        </Zoom>
       </form>
     </div>
   );

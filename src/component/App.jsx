@@ -8,11 +8,11 @@ export default function App() {
   const [list, setList] = useState([]);
 
   function handleClick(note) {
-    setList(prevVal => [...prevVal, note]);
+    setList((prevVal) => [...prevVal, note]);
   }
 
   function handleDelButton(id) {
-    setList(prevVal => {
+    setList((prevVal) => {
       return prevVal.filter((el, index) => index !== id);
     });
   }
