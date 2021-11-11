@@ -8,11 +8,11 @@ export default function App() {
   const [list, setList] = useState([]);
 
   function handleClick(note) {
-    setList((prevVal) => [...prevVal, note]);
+    setList(prevVal => [...prevVal, note]);
   }
 
   function handleDelButton(id) {
-    setList((prevVal) => {
+    setList(prevVal => {
       return prevVal.filter((el, index) => index !== id);
     });
   }
@@ -22,6 +22,14 @@ export default function App() {
       <Header />
       <CreateArea handleClick={handleClick} />
       <Footer />
+      <div className="note">
+        <h1 href="https://github.com/ShoebMerchant/keeper-app">
+          Source code Available at Github
+        </h1>
+        <p>
+          <a href="https://github.com/ShoebMerchant/keeper-app">Click Here</a>
+        </p>
+      </div>
       {list.map((note, index) => {
         return (
           <Note
